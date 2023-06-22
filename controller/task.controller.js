@@ -5,6 +5,7 @@ const task = mongoose.model('Task')
 
 module.exports.addTask = (req,res,next) =>{
     const reqFiles = []
+    
          req.body.avatar = req.body.avatar
         req.body.laboursArray = JSON.parse(req.body.labourArray)
         task.create(req.body,function(err,gallery2){

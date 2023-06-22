@@ -12,6 +12,9 @@ var TaskSchema = new mongoose.Schema({
     totalLabour:String,
     startDate:Date,
     endDate:Date,
+    uniqueSiteId:{
+      type:String,
+  },
     progressStatus:String,
     laboursArray: [{
       name : String,
