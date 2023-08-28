@@ -14,6 +14,7 @@ module.exports.addAttendence = (req,res,next) =>{
     attendecne.startDate = req.body.startDate ;
     attendecne.endDate = req.body.endDate;
     attendecne.approvalStatus = req.body.approvalStatus;
+    attendecne.uniqueSiteId = req.body.uniqueSiteId
     
     attendecne.save((err,doc)=>{
         if(!err)
@@ -75,6 +76,7 @@ module.exports.addAttendence = (req,res,next) =>{
                     attendecne.approvalStatus = req.body.approvalStatus;
                     attendecne.startDate = req.body.startDate ;
                     attendecne.endDate = req.body.endDate;
+                    attendecne.uniqueSiteId = req.body.uniqueSiteId
                     attendecne.save().then(emp => {
                   res.json('Attendence Updated Successfully');
                   })

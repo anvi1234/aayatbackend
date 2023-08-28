@@ -10,7 +10,8 @@ var AttendenceSchema = new mongoose.Schema({
     startDate:String,
     endDate:String,
     date:String,
-    employeeName:String
+    employeeName:String,
+    uniqueSiteId:String,
    
 })
 
