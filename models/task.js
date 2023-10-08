@@ -17,7 +17,7 @@ var TaskSchema = new mongoose.Schema({
   },
     progressStatus:String,
     laboursArray: [{
-      name : String,
+     name : String,
      contact :Number,
      charge :Number,
      work:[

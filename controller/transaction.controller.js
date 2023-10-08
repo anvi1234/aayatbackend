@@ -16,12 +16,10 @@ module.exports.addTransaction = (req,res,next) =>{
     transaction.work = req.body.work;
     transaction.givenBy = req.body.givenBy;
     transaction.recievedBy = req.body.recievedBy;
-    transaction.purpose = req.body.purpose;
     transaction.partyDetailsAccount = req.body.partyDetailsAccount
     transaction.billNo = req.body.billNo
     transaction.partyDetailsName = req.body.partyDetailsName
     transaction.transactionType =req.body.transactionType
-    transaction.transDate =req.body.transDate
     transaction.remark = req.body.remark
     transaction.uniqueSiteId = req.body.uniqueSiteId
     transaction.save((err,doc)=>{
@@ -76,12 +74,10 @@ module.exports.getTransaction = (req,res,next)=>{
         transaction.work = req.body.work;
         transaction.givenBy = req.body.givenBy;
         transaction.recievedBy = req.body.recievedBy;
-        transaction.purpose = req.body.purpose;
         transaction.partyDetailsAccount = req.body.partyDetailsAccount
         transaction.billNo = req.body.billNo
         transaction.partyDetailsName = req.body.partyDetailsName
         transaction.transactionType =req.body.transactionType
-        transaction.transDate =req.body.transDate
         transaction.remark = req.body.remark
         transaction.uniqueSiteId = req.body.uniqueSiteId
         transaction.save().then(emp => {
@@ -100,6 +96,15 @@ module.exports.getTransaction = (req,res,next)=>{
         if (err) res.json(err);
         else res.json('Transaction Deleted Successfully');
         });
+      }
+
+      module.exports.getTransactionByUniqueId = (req,res,next)=>{
+        Transaction.find({ uniqueSiteId : req.params.id},
+      (err,trans)=>{
+        return res.status(200).json({
+          status:true,data: trans
+      })
+      })
       }
  
       module.exports.getTransactionByComNameandloc = (req,res,next)=>{

@@ -12,33 +12,11 @@ const { links } = require("express/lib/response");
 const rtIndex = require("./routes/index.route")
 var app = express()
 app.use(bodyParser.json());
-
-
-// app.use(cors({ origin: ["https://ayat-constructionv11.herokuapp.com","https://www.aayat-construction.in"], 
-
-// methods:["GET","POST","DELETE","PUT"],
-// origin:true,
-// credentials: true }))
-
-
-
 app.use(cors());
-
-
 app.use(express.urlencoded({ extended: false })); 
 app.use(passport.initialize());
 app.use(express.json());
-
 app.use(express.static(__dirname + '/dist'));
-
-
-
-
-
-
-
-
-
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", '*');
     res.header(

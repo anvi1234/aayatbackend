@@ -40,13 +40,11 @@ var transactionSchema  = new mongoose.Schema({
    recievedBy:{
     type:String,  
    },
-   purpose:{
-    type:String,   
-   },
+ 
    transactionType:{
     type:String, 
    },
-   transDate:String
+   
 })
 
 mongoose.model('Transaction', transactionSchema )

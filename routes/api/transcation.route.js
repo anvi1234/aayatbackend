@@ -10,5 +10,6 @@ router.get('/gettransactionById/:id',transactionData.getTransactionById);
 router.put('/updatetransaction/:id',transactionData.updateTransaction);
 router.delete('/deletetransaction/:id',transactionData.deletegetTransaction);
 router.get('/gettransactionByQuery/:id', transactionData.getTransactionByComNameandloc);
+router.get('/gettransactionByUId/:id', transactionData.getTransactionByUniqueId);
 router.post('/gettotaltransactionByQuery', transactionData.getTotalTransByComNameandloc);
 module.exports = router;

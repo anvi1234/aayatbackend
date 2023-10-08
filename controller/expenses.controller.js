@@ -35,8 +35,6 @@ module.exports.expenses = (req,res,next) =>{
 }
 
 module.exports.getExpenses = (req,res,next)=>{
-
-  console.log("req",req,res)
   Expense.find(function (err, expenses) {
     if (err) {
     console.log(err);
@@ -71,8 +69,6 @@ module.exports.getExpenses = (req,res,next)=>{
       expense.superVisorName= req.body.superVisorName;
       expense.month = req.body.month;
       expense.year = req.body.year;
-      expense.totalAmount = req.body.totalAmount;
-      expense.siteAmount = req.body.siteAmount;
       expense.expenseAmount = req.body.expenseAmount;
       expense.date = req.body.date;
       expense.siteName = req.body.siteName;
@@ -84,8 +80,6 @@ module.exports.getExpenses = (req,res,next)=>{
       expense.rejectedBy = req.body.rejectedBy;
       expense.expensesType = req.body.expensesType;
       expense.uniqueSiteId = req.body.uniqueSiteId;
-      expense.updatedSiteAmount = req.body.updatedSiteAmount;
-      expense.updatedTotalAmount = req.body.updatedTotalAmount;
       expense.partyDetailsName = req.body. partyDetailsName;
       expense.partyDetailsAccount = req.body.partyDetailsAccount
       expense.save((err,doc)=>{
@@ -108,8 +102,6 @@ module.exports.getExpenses = (req,res,next)=>{
         expense.superVisorName= element.superVisorName;
         expense.month = element.month;
         expense.year =element.year;
-        expense.totalAmount = element.totalAmount;
-        expense.siteAmount = element.siteAmount;
         expense.expenseAmount = element.expenseAmount;
         expense.date = element.date;
         expense.siteName = element.siteName;
@@ -121,8 +113,6 @@ module.exports.getExpenses = (req,res,next)=>{
         expense.status = element.status;
         expense.rejectedBy = element.rejectedBy;
         expense.expensesType =element.expensesType;
-        expense.updatedSiteAmount = element.updatedSiteAmount;
-        expense.updatedTotalAmount = element.updatedTotalAmount;
         expense.partyDetailsName = element. partyDetailsName;
         expense.partyDetailsAccount = element.partyDetailsAccount
         expense.save();
@@ -148,7 +138,7 @@ module.exports.getExpenses = (req,res,next)=>{
 
         Expense.find({
          
-              uniqueSiteId : eq.params.id
+              uniqueSiteId : req.params.id
         },
         (err,expenses)=>{
           if(!expenses)
@@ -162,6 +152,16 @@ module.exports.getExpenses = (req,res,next)=>{
         }
         )
         }
+
+        module.exports.getExpensesByUniqueId = (req,res,next)=>{
+          Expense.find({ uniqueSiteId : req.params.id},
+        (err,expenses)=>{
+          return res.status(200).json({
+            status:true,data: expenses
+        })
+        })
+        }
+        
  
         module.exports.getTotalExpensesByComNameandloc = (req,res,next)=>{
           let id = req.params.id;

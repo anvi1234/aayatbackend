@@ -12,7 +12,6 @@ var AttendenceSchema = new mongoose.Schema({
     date:String,
     employeeName:String,
     uniqueSiteId:String,
-   
 })
 
 module.exports = mongoose.model('Attendence',AttendenceSchema);

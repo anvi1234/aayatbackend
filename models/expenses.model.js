@@ -13,18 +13,6 @@ var expenseSchema  = new mongoose.Schema({
     date:{
         type:Date
     },
-    totalAmount:{
-        type:Number,
-    },
-    updatedSiteAmount:{
-        type:Number,
-    },
-    updatedTotalAmount:{
-        type:Number,
-    },
-    siteAmount:{
-        type:Number,
-    },
     expenseAmount:{
         type:Number,
     },

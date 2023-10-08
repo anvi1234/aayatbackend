@@ -11,7 +11,8 @@ var SiteRegistrationSchema = new mongoose.Schema({
     date:Date,
     status:String,
     closingdate:Date,
-    uniqueSiteId:String
+    uniqueSiteId:String,
+
 })
 
 module.exports = mongoose.model('SiteRegistration',SiteRegistrationSchema);

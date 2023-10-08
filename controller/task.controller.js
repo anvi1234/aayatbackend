@@ -34,7 +34,6 @@ module.exports.getTask = (req,res,next)=>{
     
     let id = req.params.id;
     task.findByIdAndRemove({ _id: req.params.id }, function (err,gallery) {
-      console.log("gggggggggggg",err)
       if (err) res.json(err);
       else res.json({message:"File Deleted Successfully"});
       });

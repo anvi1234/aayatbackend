@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const _= require('lodash')
 const Attendence = mongoose.model('Attendence')
+const Site = mongoose.model('SiteRegistration')
 
 module.exports.addAttendence = (req,res,next) =>{
     var attendecne = new Attendence()
@@ -33,22 +34,47 @@ module.exports.addAttendence = (req,res,next) =>{
     })
 }
 
-    module.exports.getAttendenceById = (req,res,next)=>{
-        let id = req.params.id;
-        Attendence.find({
-            employeeName
-            :id},
-          (err,user)=>{
-              if(!user)
-              return res.status(404).json({
-                  status:false,message:"User not found"
-              })
-            else
-              return res.status(200).json({
-                  status:true,user: user
-              })
-          })
-        };
+module.exports.getAttendanceById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const attendance = await Attendence.find({ employeeName: id });
+
+        if (!attendance || attendance.length === 0) {
+            return res.status(404).json({
+                status: false,
+                message: "User not found"
+            });
+        }
+
+        const attendanceWithSites = [];
+
+        for (const att of attendance) {
+            const siteId = att.uniqueSiteId;
+            const site = await Site.findOne({ uniqueSiteId: siteId });
+            
+            if (site) {
+                att.siteName = site.siteName;
+                att.location = site.location; // Assuming 'siteName' is a property of the Site model
+            } else {
+                att.siteName = "Unknown Site"; // Default value if site is not found
+            }
+            
+            attendanceWithSites.push(att);
+        }
+
+        return res.status(200).json({
+            status: true,
+            attendance: attendanceWithSites
+        });
+    } catch (error) {
+        console.log(error)
+        // Handle any errors
+        return res.status(500).json({
+            status: false,
+            message: "An error occurred"
+        });
+    }
+};
     
       
         module.exports.deleteAttendecne = (req,res,next)=>{
