@@ -3,6 +3,7 @@ const passport = require('passport');
 const _= require('lodash');
 const { isEmpty } = require('lodash');
 const SiteRegistration = mongoose.model('SiteRegistration')
+const Expenses =  mongoose.model('Expense')
 
 module.exports.addSite = (req,res,next) =>{
     var  siteRegistration = new  SiteRegistration()
@@ -86,7 +87,10 @@ module.exports.getSiteReg = (req,res,next)=>{
       let id = req.params.id;
       SiteRegistration.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
         if (err) res.json(err);
-        else res.json('Site Detailed Deleted Successfully');
+        else {
+          
+          res.json('Site Detailed Deleted Successfully');
+        }
         });
       }
  
