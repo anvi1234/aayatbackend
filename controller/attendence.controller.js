@@ -34,6 +34,19 @@ module.exports.addAttendence = (req,res,next) =>{
     })
 }
 
+
+module.exports.getAttendecne = (req,res,next)=>{
+    Attendence.find(function (err, attendeceData) {
+      if (err) {
+      console.log(err);
+      }
+      else {
+      res.json( attendeceData);
+      }
+      });
+   }
+
+
 module.exports.getAttendanceById = async (req, res, next) => {
     try {
         const id = req.params.id;
