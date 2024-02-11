@@ -16,6 +16,7 @@ module.exports.addSite = (req,res,next) =>{
     siteRegistration.status= req.body.status;
     siteRegistration.work= req.body.work;
     siteRegistration.number= req.body.number;
+    siteRegistration.billStatus = null;
     siteRegistration.uniqueSiteId = req.body.uniqueSiteId
     siteRegistration.save((err,doc)=>{
         if(!err)
@@ -69,6 +70,7 @@ module.exports.getSiteReg = (req,res,next)=>{
         siteRegistration.status= req.body.status;
         siteRegistration.work= req.body.work;
         siteRegistration.number= req.body.number;
+        siteRegistration.billStatus = req.body.billStatus;
         siteRegistration.uniqueSiteId = req.body.uniqueSiteId
         siteRegistration.save().then(emp => {
 

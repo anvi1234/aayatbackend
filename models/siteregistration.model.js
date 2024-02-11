@@ -11,6 +11,7 @@ var SiteRegistrationSchema = new mongoose.Schema({
     date:Date,
     status:String,
     closingdate:Date,
+    billStatus:String,
     uniqueSiteId:String,
 
 })
