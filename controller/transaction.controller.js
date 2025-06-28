@@ -146,3 +146,86 @@ module.exports.getTransaction = (req,res,next)=>{
 
               
           }
+
+         module.exports.getTotalAmountBySiteId = async (req, res) => {
+  const { uniqueSiteId } = req.params; // or req.body / req.query as per your use
+
+  if (!uniqueSiteId) {
+    return res.status(400).json({ error: "uniqueSiteId is required" });
+  }
+
+  try {
+    const result = await Transaction.aggregate([
+      {
+        $match: { uniqueSiteId } // filter by the passed site ID
+      },
+      {
+        $group: {
+          _id: "$uniqueSiteId",
+          totalAmount: { $sum: "$totalAmount" }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          uniqueSiteId: "$_id",
+          totalAmount: 1
+        }
+      }
+    ]);
+
+    // If no match found, return 0 amount
+    if (result.length === 0) {
+      return res.json({ uniqueSiteId, totalAmount: 0 });
+    }
+
+    res.json(result[0]); // send the sum result
+  } catch (err) {
+    console.error("Error summing totalAmount:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports.getTotalBySiteAndExpenseType = async (req, res) => {
+  const { uniqueSiteId, expenseTypeId } = req.params;
+
+  if (!uniqueSiteId || !expenseTypeId) {
+    return res.status(400).json({ error: "uniqueSiteId and expenseTypeId are required" });
+  }
+
+  try {
+    const result = await Transaction.aggregate([
+      {
+        $match: {
+          uniqueSiteId,
+          expenseTypeId
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$totalAmount" }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          uniqueSiteId: uniqueSiteId,
+          expenseTypeId: expenseTypeId,
+          totalAmount: 1
+        }
+      }
+    ]);
+
+    const response = result[0] || {
+      uniqueSiteId,
+      expenseTypeId,
+      totalAmount: 0
+    };
+
+    res.json(response);
+  } catch (err) {
+    console.error("Error in aggregation:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
