@@ -22,6 +22,7 @@ module.exports.addTransaction = (req,res,next) =>{
     transaction.transactionType =req.body.transactionType
     transaction.remark = req.body.remark
     transaction.uniqueSiteId = req.body.uniqueSiteId
+    transaction.expenseTypeId = req.body.expenseTypeId
     transaction.save((err,doc)=>{
         if(!err)
         res.send(doc);
@@ -80,6 +81,7 @@ module.exports.getTransaction = (req,res,next)=>{
         transaction.transactionType =req.body.transactionType
         transaction.remark = req.body.remark
         transaction.uniqueSiteId = req.body.uniqueSiteId
+        transaction.expenseTypeId = req.body.expenseTypeId
         transaction.save().then(emp => {
     res.json(emp);
     })
