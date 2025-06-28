@@ -10,5 +10,5 @@ router.get('/getUser',ctrlUser.getUser);
 router.get('/getUserById/:id',ctrlUser.getUserById);
 router.put('/updateUser/:id',ctrlUser.updateUser);
 router.delete('/deleteUser/:id',ctrlUser.deleteUser);
-router.delete('/userByUniqueID/:id',ctrlUser.getUserByUniqueId);
+router.get('/userByUniqueID/:id',ctrlUser.getUserByUniqueId);
 module.exports = router;
