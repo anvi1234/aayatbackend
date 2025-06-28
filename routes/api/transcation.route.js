@@ -17,7 +17,7 @@ router.get(
   transactionData.getTotalBySiteAndExpenseType
 );
 router.get(
-  '/sum-by-site-expense/:uniqueSiteId',
+  '/sum-total-amount/:uniqueSiteId',
   transactionData.getTotalAmountBySiteId
 );
 module.exports = router;
