@@ -127,38 +127,6 @@ module.exports.getTransaction = (req,res,next)=>{
         }
 
         module.exports.getTotalTransByComNameandloc = (req,res,next)=>{
-        //   transactionArray = []
-        //   console.log("bbbbbbbbbbbb",req.body)
-        //   return new Promise((Resolve, reject) => 
-        //   req.body.forEach((data)=>{
-        //     Transaction.find({
-        //       $and: [
-        //           { 
-        //               siteName: { $eq:data.sitename}},
-        //               { location
-        //               : { $eq: data.location}}
-        //        ]
-        //   },
-        //   (err,expenses)=>{
-                
-        //       expenseValue = 0
-        //       expenses.forEach((data)=>{
-        //       expenseValue = expenseValue + data.totalAmount
-        //   })
-          
-        //    obj = { "siteName":data.sitename ,"location":data.location,"transaction":expenseValue }
-          
-        //    transactionArray.push(obj)
-        //    Resolve(  transactionArray)
-        //    })
-       
-        //   }),
-       
-        // ).then((e)=>{
-        //   console.log("vvvvvvvvvvvv",   e)
-        // })
-      
-
         Transaction.find({
           uniqueSiteId : req.params.id
             },
