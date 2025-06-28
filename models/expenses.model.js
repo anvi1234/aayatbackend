@@ -64,8 +64,7 @@ var expenseSchema  = new mongoose.Schema({
         quantity:String
          }],
            expenseTypeId: {
-             type: mongoose.Schema.Types.ObjectId,
-             ref: 'ExpenseType' // should match the model name of the referenced collection
+             type:String
            }
 })
 

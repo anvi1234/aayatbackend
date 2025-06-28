@@ -12,7 +12,7 @@ router.use('/sor', require('./api/sor.route'));
 router.use('/push', require('./api/push.route'));
 router.use('/drawing', require('./api/drawing.route'));
 router.use('/ledger', require('./api/ledger.route'));
-router.use('/expenseType', require('./api/expenseType.route'))
+
 
 
 module.exports = router;
