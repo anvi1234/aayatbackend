@@ -115,6 +115,7 @@ module.exports.getExpenses = (req,res,next)=>{
         expense.status = element.status;
         expense.rejectedBy = element.rejectedBy;
         expense.expensesType =element.expensesType;
+       expense.expenseTypeId = req.body.expenseTypeId
         expense.partyDetailsName = element. partyDetailsName;
         expense.partyDetailsAccount = element.partyDetailsAccount
         expense.save();
