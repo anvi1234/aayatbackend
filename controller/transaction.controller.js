@@ -268,7 +268,7 @@ module.exports.getTransactionAndExpenseTotals = async (req, res) => {
       {
         $group: {
           _id: null,
-          totalExpenseAmount: { $sum: "$totalAmount" }
+          totalExpenseAmount: { $sum: "$expenseAmount" }
         }
       }
     ]);
