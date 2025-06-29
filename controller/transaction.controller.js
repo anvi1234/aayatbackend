@@ -244,6 +244,15 @@ module.exports.getTransactionAndExpenseTotals = async (req, res) => {
     // Aggregation from Transaction collection
     const [transactionAgg] = await Transaction.aggregate([
       {
+              $match: { uniqueSiteId }
+            },
+            {
+              $group: {
+                _id: null,
+                sumOfTransactionAmount: { $sum: "$totalAmount" }
+              }
+            },
+      {
         $match: {
           uniqueSiteId,
           expenseTypeId
@@ -259,6 +268,7 @@ module.exports.getTransactionAndExpenseTotals = async (req, res) => {
 
     // Aggregation from Expense collection
     const [expenseAgg] = await Expense.aggregate([
+            
       {
         $match: {
           uniqueSiteId,
@@ -278,7 +288,8 @@ module.exports.getTransactionAndExpenseTotals = async (req, res) => {
       uniqueSiteId,
       expenseTypeId,
       totalTransactionAmount: transactionAgg?.totalTransactionAmount || 0,
-      totalExpenseAmount: expenseAgg?.totalExpenseAmount || 0
+      totalExpenseAmount: expenseAgg?.totalExpenseAmount || 0,
+      sumOfTransactionAmount:transactionAgg?.sumOfTransactionAmount || 0
     });
 
   } catch (err) {
