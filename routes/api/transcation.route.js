@@ -21,7 +21,7 @@ router.get(
   transactionData.getTotalAmountBySiteId
 );
 router.get(
-  '/summary/:uniqueSiteId/:expenseTypeId',
+  '/summary',
   transactionData.getTransactionAndExpenseTotals
 );
 module.exports = router;
