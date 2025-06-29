@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const _= require('lodash');
 const { resolveObjectURL } = require('buffer');
-const Transaction = mongoose.model('Transaction')
+const Transaction = mongoose.model('Transaction');
+const Expense = mongoose.model('Expense')
 global.transactionArray = []
 module.exports.addTransaction = (req,res,next) =>{
     var transaction = new  Transaction()
@@ -224,6 +225,62 @@ module.exports.getTotalBySiteAndExpenseType = async (req, res) => {
     };
 
     res.json(response);
+  } catch (err) {
+    console.error("Error in aggregation:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports.getTransactionAndExpenseTotals = async (req, res) => {
+  const { uniqueSiteId, expenseTypeId } = req.query;
+
+  if (!uniqueSiteId || !expenseTypeId) {
+    return res.status(400).json({
+      error: "uniqueSiteId and expenseTypeId are required"
+    });
+  }
+
+  try {
+    // Aggregation from Transaction collection
+    const [transactionAgg] = await Transaction.aggregate([
+      {
+        $match: {
+          uniqueSiteId,
+          expenseTypeId
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalTransactionAmount: { $sum: "$totalAmount" }
+        }
+      }
+    ]);
+
+    // Aggregation from Expense collection
+    const [expenseAgg] = await Expense.aggregate([
+      {
+        $match: {
+          uniqueSiteId,
+          expenseTypeId
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalExpenseAmount: { $sum: "$totalAmount" }
+        }
+      }
+    ]);
+
+    // Return result
+    res.json({
+      uniqueSiteId,
+      expenseTypeId,
+      totalTransactionAmount: transactionAgg?.totalTransactionAmount || 0,
+      totalExpenseAmount: expenseAgg?.totalExpenseAmount || 0
+    });
+
   } catch (err) {
     console.error("Error in aggregation:", err);
     res.status(500).json({ error: "Internal server error" });

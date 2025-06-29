@@ -20,4 +20,8 @@ router.get(
   '/sum-total-amount/:uniqueSiteId',
   transactionData.getTotalAmountBySiteId
 );
+router.get(
+  '/summary/:uniqueSiteId/:expenseTypeId',
+  transactionData.getTransactionAndExpenseTotals
+);
 module.exports = router;
