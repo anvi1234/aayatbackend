@@ -241,22 +241,23 @@ module.exports.getTransactionAndExpenseTotals = async (req, res) => {
   }
 
   try {
-    // Aggregation from Transaction collection
-    const [transactionAgg] = await Transaction.aggregate([
+    // 1. Get sum of all transactions for the site
+    const [sumAllTxn] = await Transaction.aggregate([
       {
-              $match: { uniqueSiteId }
-            },
-            {
-              $group: {
-                _id: null,
-                sumOfTransactionAmount: { $sum: "$totalAmount" }
-              }
-            },
+        $match: { uniqueSiteId }
+      },
       {
-        $match: {
-          uniqueSiteId,
-          expenseTypeId
+        $group: {
+          _id: null,
+          sumOfTransactionAmount: { $sum: "$totalAmount" }
         }
+      }
+    ]);
+
+    // 2. Get total transactions for site + expenseType
+    const [txnAgg] = await Transaction.aggregate([
+      {
+        $match: { uniqueSiteId, expenseTypeId }
       },
       {
         $group: {
@@ -266,30 +267,25 @@ module.exports.getTransactionAndExpenseTotals = async (req, res) => {
       }
     ]);
 
-    // Aggregation from Expense collection
-    const [expenseAgg] = await Expense.aggregate([
-            
+    // 3. Get total expenses for site + expenseType
+    const [expAgg] = await Expense.aggregate([
       {
-        $match: {
-          uniqueSiteId,
-          expenseTypeId
-        }
+        $match: { uniqueSiteId, expenseTypeId }
       },
       {
         $group: {
           _id: null,
-          totalExpenseAmount: { $sum: "$expenseAmount" }
+          totalExpenseAmount: { $sum: "$expenseAmount" } // confirm if this should be expenseAmount or totalAmount
         }
       }
     ]);
 
-    // Return result
     res.json({
       uniqueSiteId,
       expenseTypeId,
-      totalTransactionAmount: transactionAgg?.totalTransactionAmount || 0,
-      totalExpenseAmount: expenseAgg?.totalExpenseAmount || 0,
-      sumOfTransactionAmount:transactionAgg?.sumOfTransactionAmount || 0
+      sumOfTransactionAmount: sumAllTxn?.sumOfTransactionAmount || 0,
+      totalTransactionAmount: txnAgg?.totalTransactionAmount || 0,
+      totalExpenseAmount: expAgg?.totalExpenseAmount || 0
     });
 
   } catch (err) {
@@ -297,3 +293,4 @@ module.exports.getTransactionAndExpenseTotals = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
