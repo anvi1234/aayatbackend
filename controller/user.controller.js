@@ -3,47 +3,53 @@ const passport = require('passport');
 const _= require('lodash')
 const User = mongoose.model('User')
 
-module.exports.register = (req, res, next) => {
-    const user = new User({
-        siteName: req.body.siteName,
-        location: req.body.location,
-        fullName: req.body.fullName,
-        email: req.body.email,
-        password: req.body.password,
-        designation: req.body.designation,
-        mobileNo: req.body.mobileNo,
-        adharNo: req.body.adharNo,
-        address: req.body.address,
-        basicPay: req.body.basicPay,
-        bankName: req.body.bankName,
-        accNo: req.body.accNo,
-        ifsccode: req.body.ifsccode,
-        uniqueSiteId: req.body.uniqueSiteId,
-    });
+module.exports.register = async (req, res, next) => {
+    try {
+        const existingUser = await User.findOne({ email: req.body.email });
 
-    user.save((err, doc) => {
-        if (!err) {
+        if (existingUser) {
+            // Email already exists — send 200 with a message
             return res.status(200).json({
-                message: "User registered successfully",
-                data: doc,
-                status:200
+                message: "Email already exists.",
+                alreadyExists: true,
+                status: 200
             });
-        } else {
-            if (err.code === 11000) {
-                return res.status(400).json({
-                    message: "Email already exists.",
-                    status:400
-                });
-            } else {
-                return res.status(500).json({
-                    message: "Something went wrong.",
-                    error: err.message,
-                    status:500
-                });
-            }
         }
-    });
+
+        const user = new User({
+            siteName: req.body.siteName,
+            location: req.body.location,
+            fullName: req.body.fullName,
+            email: req.body.email,
+            password: req.body.password,
+            designation: req.body.designation,
+            mobileNo: req.body.mobileNo,
+            adharNo: req.body.adharNo,
+            address: req.body.address,
+            basicPay: req.body.basicPay,
+            bankName: req.body.bankName,
+            accNo: req.body.accNo,
+            ifsccode: req.body.ifsccode,
+            uniqueSiteId: req.body.uniqueSiteId,
+        });
+
+        const savedUser = await user.save();
+
+        return res.status(200).json({
+            message: "User registered successfully",
+            data: savedUser,
+            status: 200
+        });
+    } catch (err) {
+        console.error("Register Error:", err);
+        return res.status(500).json({
+            message: "Something went wrong.",
+            error: err.message,
+            status: 500
+        });
+    }
 };
+
 
 module.exports.authenticate=(req,res,next)=>{
 passport.authenticate('local',(err,user,info)=>{
