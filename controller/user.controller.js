@@ -23,19 +23,19 @@ module.exports.register = (req, res, next) => {
 
     user.save((err, doc) => {
         if (!err) {
-            return res.status(200).send({
+            return res.status(200).json({
                 message: "User registered successfully",
                 data: doc,
                 status:200
             });
         } else {
             if (err.code === 11000) {
-                return res.status(400).send({
+                return res.status(400).json({
                     message: "Email already exists.",
                     status:400
                 });
             } else {
-                return res.status(500).send({
+                return res.status(500).json({
                     message: "Something went wrong.",
                     error: err.message,
                     status:500
