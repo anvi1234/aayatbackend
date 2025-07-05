@@ -95,34 +95,59 @@ module.exports.getUser = (req,res,next)=>{
   
    }
   
-   module.exports.updateUser = (req,res,next)=>{
-    User.findById(req.params.id, function (err,user) {
-      if (! user)
-      return next(new Error('Unable To Find Expenses With This Id'));
-      else {
+  module.exports.updateUser = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        // Check if another user already has the same email
+        const existingUser = await User.findOne({ email: req.body.email });
+
+        if (existingUser && existingUser._id.toString() !== req.params.id) {
+            return res.status(200).json({
+                message: "Email already exists.",
+                alreadyExists: true,
+                status: 200
+            });
+        }
+
+        // Proceed with update
         user.siteName = req.body.siteName;
         user.location = req.body.location;
         user.fullName = req.body.fullName;
-        user.email =  req.body.email;
+        user.email = req.body.email;
         user.password = req.body.password;
         user.designation = req.body.designation;
         user.mobileNo = req.body.mobileNo;
         user.adharNo = req.body.adharNo;
         user.address = req.body.address;
-        user. basicPay = req.body.basicPay;
+        user.basicPay = req.body.basicPay;
         user.bankName = req.body.bankName;
         user.accNo = req.body.accNo;
         user.ifsccode = req.body.ifsccode;
         user.uniqueSiteId = req.body.uniqueSiteId;
-        user.save().then(emp => {
-      res.json('User Updated Successfully');
-      })
-      .catch(err => {
-      res.status(400).send("Unable To Update Expenses");
-      });
-      }
-      });
-   } 
+
+        const updatedUser = await user.save();
+
+        return res.status(200).json({
+            message: "User updated successfully.",
+            data: updatedUser,
+            status: 200
+        });
+
+    } catch (err) {
+        console.error("Update Error:", err);
+        return res.status(500).json({
+            message: "Something went wrong during update.",
+            error: err.message,
+            status: 500
+        });
+    }
+};
+
       module.exports.deleteUser = (req,res,next)=>{
          let id = req.params.id;
           User.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
