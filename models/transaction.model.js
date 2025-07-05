@@ -44,7 +44,9 @@ var transactionSchema  = new mongoose.Schema({
    transactionType:{
     type:String, 
    },
-   
+    expenseTypeId: {
+    type:String
+  }
 })
 
 mongoose.model('Transaction', transactionSchema )

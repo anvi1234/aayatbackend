@@ -24,7 +24,8 @@ module.exports.expenses = (req,res,next) =>{
    expense.updatedTotalAmount = req.body.updatedTotalAmount;
    expense.uniqueSiteId = req.body.uniqueSiteId;
    expense.partyDetailsName = req.body. partyDetailsName;
-   expense.partyDetailsAccount = req.body.partyDetailsAccount
+   expense.partyDetailsAccount = req.body.partyDetailsAccount;
+   expense.expenseTypeId = req.body.expenseTypeId
      expense.save((err,doc)=>{
         if(!err)
         res.send(doc);
@@ -81,7 +82,8 @@ module.exports.getExpenses = (req,res,next)=>{
       expense.expensesType = req.body.expensesType;
       expense.uniqueSiteId = req.body.uniqueSiteId;
       expense.partyDetailsName = req.body. partyDetailsName;
-      expense.partyDetailsAccount = req.body.partyDetailsAccount
+      expense.partyDetailsAccount = req.body.partyDetailsAccount;
+       expense.expenseTypeId = req.body.expenseTypeId
       expense.save((err,doc)=>{
         if(!err)
         res.send(doc);
@@ -113,6 +115,7 @@ module.exports.getExpenses = (req,res,next)=>{
         expense.status = element.status;
         expense.rejectedBy = element.rejectedBy;
         expense.expensesType =element.expensesType;
+       expense.expenseTypeId = req.body.expenseTypeId
         expense.partyDetailsName = element. partyDetailsName;
         expense.partyDetailsAccount = element.partyDetailsAccount
         expense.save();

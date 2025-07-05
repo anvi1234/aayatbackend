@@ -62,7 +62,10 @@ var expenseSchema  = new mongoose.Schema({
         productItem : String,
         amount :Number,
         quantity:String
-         }]
+         }],
+           expenseTypeId: {
+             type:String
+           }
 })
 
 mongoose.model('Expense', expenseSchema )

@@ -127,3 +127,13 @@ module.exports.cngSite = (req,res,next)=>{
    }
    )
 }
+
+ module.exports.getUserByUniqueId = (req,res,next)=>{
+        User.find({ uniqueSiteId : req.params.id},
+      (err,trans)=>{
+        return res.status(200).json({
+          status:true,data: trans
+      })
+      })
+      }
+ 

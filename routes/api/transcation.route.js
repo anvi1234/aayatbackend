@@ -12,4 +12,16 @@ router.delete('/deletetransaction/:id',transactionData.deletegetTransaction);
 router.get('/gettransactionByQuery/:id', transactionData.getTransactionByComNameandloc);
 router.get('/gettransactionByUId/:id', transactionData.getTransactionByUniqueId);
 router.post('/gettotaltransactionByQuery', transactionData.getTotalTransByComNameandloc);
+router.get(
+  '/sum/:uniqueSiteId/:expenseTypeId',
+  transactionData.getTotalBySiteAndExpenseType
+);
+router.get(
+  '/sum-total-amount/:uniqueSiteId',
+  transactionData.getTotalAmountBySiteId
+);
+router.get(
+  '/summary',
+  transactionData.getTransactionAndExpenseTotals
+);
 module.exports = router;
