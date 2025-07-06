@@ -10,7 +10,13 @@ var LedgerSchema = new mongoose.Schema({
     closingBal : String,
     grandCredit :String,
     grandDebit : String,
-    dataArray: Array
+    dataArray: Array,
+   companyDetails: {
+    name: { type: String, required: true },
+    address: { type: String, required: true },
+    mobile: { type: String, required: true },
+    gstin: { type: String, required: true }
+  }
    
 })
 

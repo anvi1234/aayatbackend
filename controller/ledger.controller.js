@@ -14,7 +14,8 @@ module.exports.addLedger= (req,res,next) =>{
     newledger.closingBal =  req.body.closingBal,
     newledger.grandCredit =   req.body.grandCredit,
     newledger.grandDebit =  req.body.grandDebit,
-    newledger.dataArray =  req.body.dataArray
+    newledger.dataArray =  req.body.dataArray,
+    newledger.companyDetails = req.body.companyDetails
   
     newledger.save((err,doc)=>{
         if(!err)
@@ -67,7 +68,8 @@ module.exports.getledger = (req,res,next)=>{
         ledger.closingBal =  req.body.closingBal,
         ledger.grandCredit =   req.body.grandCredit,
         ledger.grandDebit =  req.body.grandDebit,
-        ledger.dataArray =  req.body.dataArray
+        ledger.dataArray =  req.body.dataArray,
+         ledger.companyDetails = req.body.companyDetails
        ledger.save().then(emp => {
 
           
