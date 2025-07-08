@@ -4,7 +4,7 @@ const SOR = mongoose.model('Sor')
 const SAMPLESOR = mongoose.model('SampleSor')
 const SORREgSITE = mongoose.model('SORRegardingSite')
 const SORBill = mongoose.model('SORBillSite')
-
+//SOR//
 module.exports.addSor = (req,res,next) =>{
     var sor = new SOR()
      sor.Description = req.body.Description
@@ -89,6 +89,9 @@ module.exports.getSor = (req,res,next)=>{
           });
         }
 
+
+        //Sample SOR //
+
         module.exports.addSampleSor = (req,res,next) =>{
           var sor = new SAMPLESOR()
            sor.siteName = req.body.siteName
@@ -122,6 +125,8 @@ module.exports.getSor = (req,res,next)=>{
           });
        }
 
+
+       //SOR RegardingSite//
        module.exports.addSorRegardingSite = (req,res,next) =>{
         var sor = new SORREgSITE()
          sor.siteName = req.body.siteName
@@ -165,25 +170,32 @@ module.exports.getSor = (req,res,next)=>{
         });
      }
 
-     module.exports.deleteSorRegSite = (req,res,next)=>{
-    
+     module.exports.deleteSorRegSite = (req,res,next)=>{ 
         let id = req.params.id;
         SORREgSITE.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
           if (err) res.json(err);
           else res.json('MB Deleted Successfully');
           });
         }
-    
-  module.exports.deleteSorRegSite = (req,res,next)=>{
-    
-        let id = req.params.id;
-        SORREgSITE.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
-          if (err) res.json(err);
-          else res.json('MB Deleted Successfully');
-          });
-        }
-    
 
+        module.exports.getSORREgardingById = (req,res,next)=>{
+            let id = req.params.id
+            SORREgSITE.findOne({_id:id},
+      (err,SOR)=>{
+        if(SOR){
+             return res.status(200).json({
+              status:true,user: user
+          })
+        }
+
+        else{
+            return [];
+        }
+    })
+      
+        }
+
+        //SOR BILL //
      module.exports.addBillSor = (req,res,next) =>{
         var sor = new SORBill()
          sor.billDeatilsObj = req.body.billDeatilsObj
