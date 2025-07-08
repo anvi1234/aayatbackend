@@ -194,6 +194,34 @@ module.exports.getSor = (req,res,next)=>{
     })
       
         }
+        module.exports.updateSorRegBySite = (req,res,next)=>{
+        SORREgSITE.findById(req.params.id, function (err, sor) {
+         
+          if (!sor)
+          
+          return next(new Error('Unable To Find Site With This Id'));
+          else {
+            sor.siteName = req.body.siteName
+            sor.data = req.body.data
+            sor.nameOfConstruction = req.body.nameOfConstruction
+            sor.nameOfWork = req.body.nameOfWork
+            sor.totalAmount = req.body.totalAmount,
+            sor.gstAmount = req.body.gstAmount,
+            sor.sgstAmount = req.body.sgstAmount,
+            sor.combineAmount = req.body.combineAmount,
+            sor.cgst =  req.body.cgst 
+            sor.sgst =  req.body.sgst
+           sor.save().then(emp => {
+    
+              
+          res.json('Site Updated Successfully');
+          })
+          .catch(err => {
+          res.status(400).send("Unable To Update Site");
+          });
+          }
+          });
+       } 
 
         //SOR BILL //
      module.exports.addBillSor = (req,res,next) =>{
@@ -246,32 +274,21 @@ module.exports.getSor = (req,res,next)=>{
         });
      }
 
-
-     module.exports.updateSorRegBySite = (req,res,next)=>{
-        SORREgSITE.findById(req.params.id, function (err, sor) {
-         
-          if (!sor)
-          
-          return next(new Error('Unable To Find Site With This Id'));
-          else {
-            sor.siteName = req.body.siteName
-            sor.data = req.body.data
-            sor.nameOfConstruction = req.body.nameOfConstruction
-            sor.nameOfWork = req.body.nameOfWork
-            sor.totalAmount = req.body.totalAmount,
-            sor.gstAmount = req.body.gstAmount,
-            sor.sgstAmount = req.body.sgstAmount,
-            sor.combineAmount = req.body.combineAmount,
-            sor.cgst =  req.body.cgst 
-            sor.sgst =  req.body.sgst
-           sor.save().then(emp => {
-    
-              
-          res.json('Site Updated Successfully');
+      module.exports.getSORBillById = (req,res,next)=>{
+            let id = req.params.id
+            SORBill.findOne({_id:id},
+      (err,SOR)=>{
+        if(SOR){
+             return res.status(200).json({
+              status:true,data: SOR
           })
-          .catch(err => {
-          res.status(400).send("Unable To Update Site");
-          });
-          }
-          });
-       } 
+        }
+
+        else{
+            return [];
+        }
+    })
+      
+        }
+
+     
