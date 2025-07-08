@@ -134,6 +134,7 @@ module.exports.getSor = (req,res,next)=>{
          sor.combineAmount = req.body.combineAmount,
          sor.cgst =  req.body.cgst 
          sor.sgst =  req.body.sgst
+         sor.sampleName =  req.body.sampleName
          sor.save((err,doc)=>{
             if(!err)
             return res.status(200).json({
@@ -194,6 +195,7 @@ module.exports.getSor = (req,res,next)=>{
          sor.sgstAmount = req.body.sgstAmount
          sor.totalAmount = req.body.totalAmount 
          sor.combinedAmount = req.body.combinedAmount
+         sor.sampleName =  req.body.sampleName
          sor.save((err,doc)=>{
             if(!err)
             return res.status(200).json({

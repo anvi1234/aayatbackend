@@ -31,7 +31,8 @@ var addSorRegardingWorkingSite  = new mongoose.Schema({
     combineAmount:String,
     cgst:String,
     sgst:String,
-    data:[]
+    data:[],
+    sampleName:String
    
 })
 module.exports = mongoose.model('SORRegardingSite',addSorRegardingWorkingSite );
@@ -45,6 +46,7 @@ var addSorBill  = new mongoose.Schema({
     gstAmount:String,
     sgstAmount:String,
     totalAmount:String,
-    combinedAmount:String
+    combinedAmount:String,
+    sampleName:String
 })
 module.exports = mongoose.model('SORBillSite',addSorBill);
