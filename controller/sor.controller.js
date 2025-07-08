@@ -184,7 +184,7 @@ module.exports.getSor = (req,res,next)=>{
       (err,SOR)=>{
         if(SOR){
              return res.status(200).json({
-              status:true,user: user
+              status:true,SOR: SOR
           })
         }
 
