@@ -7,14 +7,9 @@ const SORBill = mongoose.model('SORBillSite')
 //SOR//
 module.exports.addSor = (req,res,next) =>{
     var sor = new SOR()
-     sor.Description = req.body.Description
-     sor.Sn = req.body.Sn
-     sor.ServiceNo = req.body.ServiceNo
-     sor.UoM = req.body.UoM
-     sor.Category = req.body.Category
-     sor.Estimate= req.body.Estimate
-     sor.FinalRate = req.body.FinalRate
-    
+     sor.sampleName = req.body.sampleName
+     sor.state = req.body.state
+     sor.data = req.body.data
    sor.save((err,doc)=>{
         if(!err)
         return res.status(200).json({

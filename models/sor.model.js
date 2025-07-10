@@ -1,13 +1,19 @@
 const mongoose  = require("mongoose");
 
 var sorSchema  = new mongoose.Schema({
-    Sn: String,
+
+    sampleName: String,
+    state: String,
+    data:[
+        { Sn: String,
     Description:String,
     ServiceNo:String,
     UoM:String,
     Category:String,
     Estimate:String,
-    FinalRate:String
+    FinalRate:String}
+    ]
+   
    
 })
 module.exports = mongoose.model('Sor',sorSchema);
