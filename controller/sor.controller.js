@@ -89,8 +89,9 @@ module.exports.getSor = (req,res,next)=>{
 
         module.exports.addSampleSor = (req,res,next) =>{
           var sor = new SAMPLESOR()
-           sor.siteName = req.body.siteName
+           sor.sampleName = req.body.sampleName
            sor.data = req.body.data
+           sor.state = req.body.state
            sor.save((err,doc)=>{
               if(!err)
               return res.status(200).json({

@@ -20,8 +20,9 @@ module.exports = mongoose.model('Sor',sorSchema);
 
 
 var addSorSchema  = new mongoose.Schema({
-    siteName: String,
-    data:[]
+    sampleName: String,
+    data:[],
+    state:String
    
 })
 module.exports = mongoose.model('SampleSor',addSorSchema);
