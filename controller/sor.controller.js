@@ -86,27 +86,7 @@ console.log(".....",sorId,dataItemId,updatedFields)
   );
 };
 
-   module.exports.updateSor = (req,res,next)=>{
-    SOR.findById(req.params.id, function (err,sor) {
-      if (! sor)
-      return next(new Error('Unable To Find Expenses With This Id'));
-      else {
-        sor.Description = req.body.Description
-        sor.Sn = req.body.Sn
-        sor.ServiceNo = req.body.ServiceNo
-        sor.UOM = req.body.UOM
-        sor.Category = req.body.Category
-        sor.Estimate= req.body.Estimate
-        sor.FinalRate = req.body.FinalRate
-        sor.save().then(emp => {
-      res.json('User Updated Successfully');
-      })
-      .catch(err => {
-      res.status(400).send("Unable To Update Expenses");
-      });
-      }
-      });
-   } 
+ 
       module.exports.deleteSOR = (req,res,next)=>{
          let id = req.params.id;
           SOR.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
