@@ -55,6 +55,35 @@ module.exports.getSor = (req,res,next)=>{
   
    }
   
+
+   module.exports.updateSor = (req, res, next) => {
+  const sorId = req.body.sorId;              // Main SOR document ID
+  const dataItemId = req.body.dataItemId;    // ID of item inside data array
+  const updatedFields = req.body.updatedFields; // Object with updated fields
+
+  SOR.updateOne(
+    { _id: sorId, "data._id": dataItemId },
+    {
+      $set: {
+        "data.$.FinalRate": updatedFields.FinalRate,
+        "data.$.Estimate": updatedFields.Estimate,
+        "data.$.Description": updatedFields.Description,
+        "data.$Sn":updatedFields.Sn,
+        "data.$ServiceNo":updatedFields.ServiceNo,
+        "data.$UOM":updatedFields.UOM,
+        "data.$Category":updatedFields.Category
+      }
+    },
+    (err, result) => {
+      if (!err) {
+        res.status(200).json({ message: 'Data item updated successfully', result });
+      } else {
+        next(err);
+      }
+    }
+  );
+};
+
    module.exports.updateSor = (req,res,next)=>{
     SOR.findById(req.params.id, function (err,sor) {
       if (! sor)
@@ -86,7 +115,6 @@ module.exports.getSor = (req,res,next)=>{
 
 
         //Sample SOR //
-
         module.exports.addSampleSor = (req,res,next) =>{
           var sor = new SAMPLESOR()
            sor.sampleName = req.body.sampleName

@@ -7,7 +7,7 @@ router.post('/add-sor',sorsData.addSor);
 // router.post('/authenticate',ctrlUser.authenticate);
 router.get('/getSor',sorsData.getSor);
 router.get('/getSorById/:id',sorsData.getSORById);
-router.put('/updateSor/:id',sorsData.updateSor);
+router.put('/updateSor',sorsData.updateSor);
 router.delete('/deleteSor/:id',sorsData.deleteSOR);
 router.post('/add-sample-sor',sorsData.addSampleSor);
 router.get('/getSampleSor',sorsData.getSampleSor);
