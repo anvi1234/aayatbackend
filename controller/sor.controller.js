@@ -57,10 +57,12 @@ module.exports.getSor = (req,res,next)=>{
   
 
    module.exports.updateSor = (req, res, next) => {
+
+    console.log("reqqqqq",req)
   const sorId = req.body.sorId;              // Main SOR document ID
   const dataItemId = req.body.dataItemId;    // ID of item inside data array
   const updatedFields = req.body.updatedFields; // Object with updated fields
-
+console.log(".....",sorId,dataItemId,updatedFields)
   SOR.updateOne(
     { _id: sorId, "data._id": dataItemId },
     {
