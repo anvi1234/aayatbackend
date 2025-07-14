@@ -4,13 +4,7 @@ var sorSchema  = new mongoose.Schema({
 
     sampleName: String,
     state: String,
-    data:[
-        { Sn: String,
-    Description:String,
-    ServiceNo:String,
-    UoM:String,
-    FinalRate:String}
-    ]
+    data:[]
    
    
 })
