@@ -136,6 +136,7 @@ console.log(".....",sorId,dataItemId,updatedFields)
        module.exports.addSorRegardingSite = (req,res,next) =>{
         var sor = new SORREgSITE()
          sor.siteName = req.body.siteName
+         sor.locationName = req.body.locationName
          sor.data = req.body.data
          sor.nameOfConstruction = req.body.nameOfConstruction
          sor.nameOfWork = req.body.nameOfWork
@@ -233,6 +234,7 @@ console.log(".....",sorId,dataItemId,updatedFields)
      module.exports.addBillSor = (req,res,next) =>{
         var sor = new SORBill()
          sor.billDeatilsObj = req.body.billDeatilsObj
+         sor.locationName = req.body.locationName
          sor.data = req.body.data
          sor.sgst = req.body.sgst
          sor.billName = req.body.billName

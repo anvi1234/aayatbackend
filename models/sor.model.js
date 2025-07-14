@@ -30,6 +30,7 @@ module.exports = mongoose.model('SampleSor',addSorSchema);
 
 var addSorRegardingWorkingSite  = new mongoose.Schema({
     siteName: String,
+    locationName:String,
     nameOfConstruction:String,
     nameOfWork:String,
     totalAmount:String,
@@ -47,6 +48,7 @@ module.exports = mongoose.model('SORRegardingSite',addSorRegardingWorkingSite );
 var addSorBill  = new mongoose.Schema({
     billDeatilsObj : {},
     billName:String,
+    locationName:String,
     data:[],
     sgst:String,
     cgst:String,
