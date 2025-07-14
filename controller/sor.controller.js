@@ -57,23 +57,18 @@ module.exports.getSor = (req,res,next)=>{
   
 
    module.exports.updateSor = (req, res, next) => {
-
-    console.log("reqqqqq",req)
   const sorId = req.body.sorId;              // Main SOR document ID
   const dataItemId = req.body.dataItemId;    // ID of item inside data array
   const updatedFields = req.body.updatedFields; // Object with updated fields
-console.log(".....",sorId,dataItemId,updatedFields)
   SOR.updateOne(
     { _id: sorId, "data._id": dataItemId },
     {
       $set: {
         "data.$.FinalRate": updatedFields.FinalRate,
-        "data.$.Estimate": updatedFields.Estimate,
         "data.$.Description": updatedFields.Description,
         "data.$Sn":updatedFields.Sn,
         "data.$ServiceNo":updatedFields.ServiceNo,
         "data.$UOM":updatedFields.UOM,
-        "data.$Category":updatedFields.Category
       }
     },
     (err, result) => {
@@ -91,7 +86,7 @@ console.log(".....",sorId,dataItemId,updatedFields)
          let id = req.params.id;
           SOR.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
           if (err) res.json(err);
-          else res.json('User Deleted Successfully');
+          else res.json('SOR Deleted Successfully');
           });
         }
 

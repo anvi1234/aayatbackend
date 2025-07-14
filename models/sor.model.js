@@ -9,8 +9,6 @@ var sorSchema  = new mongoose.Schema({
     Description:String,
     ServiceNo:String,
     UoM:String,
-    Category:String,
-    Estimate:String,
     FinalRate:String}
     ]
    
