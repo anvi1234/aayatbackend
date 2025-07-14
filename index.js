@@ -11,11 +11,11 @@ const PORT = process.env.PORT || 3000;
 const { links } = require("express/lib/response");
 const rtIndex = require("./routes/index.route")
 var app = express()
-app.use(bodyParser.json());
+app.use(express.json({ limit: '50mb' })); app.use(bodyParser.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false })); 
 app.use(passport.initialize());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use(express.static(__dirname + '/dist'));
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", '*');
