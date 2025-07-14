@@ -4,11 +4,22 @@ var sorSchema  = new mongoose.Schema({
 
     sampleName: String,
     state: String,
-    data:[]
    
    
 })
 module.exports = mongoose.model('Sor',sorSchema);
+
+const sorDataSchema = new mongoose.Schema({
+  sorId: { type: mongoose.Schema.Types.ObjectId, ref: "Sor" },
+  Sn: String,
+  ServiceNo: Number,
+  Description: String,
+  UoM:String,
+  FinalRate: Number
+  // other fields in your data array
+});
+
+module.exports = mongoose.model("SORData", sorDataSchema);
 
 
 var addSorSchema  = new mongoose.Schema({

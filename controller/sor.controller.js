@@ -4,28 +4,62 @@ const SOR = mongoose.model('Sor')
 const SAMPLESOR = mongoose.model('SampleSor')
 const SORREgSITE = mongoose.model('SORRegardingSite')
 const SORBill = mongoose.model('SORBillSite')
+const SORData = mongoose.model('SORData')
 //SOR//
-module.exports.addSor = (req,res,next) =>{
-    var sor = new SOR()
-     sor.sampleName = req.body.sampleName
-     sor.state = req.body.state
-     sor.data = req.body.data
-   sor.save((err,doc)=>{
-        if(!err)
-        return res.status(200).json({
-            "sor": sor
+
+module.exports.addSor = async (req, res, next) => {
+  try {
+    const { sampleName, state, data } = req.body;
+
+    // 1. Save base SOR info (without large data array)
+    const sor = new SOR({ sampleName, state });
+    const savedSor = await sor.save();
+
+    // 2. Map and save each data item individually with reference to SOR
+    const sorDataArray = data.map(item => ({
+      sorId: savedSor._id,
+      ...item
+    }));
+
+    await SORData.insertMany(sorDataArray);
+
+    return res.status(200).json({
+      message: "SOR and related data inserted successfully",
+      sor: savedSor,
+      dataCount: sorDataArray.length,
+    });
+
+  } catch (err) {
+    if (err.code == 11000) {
+      console.log("Duplicate key error");
+      return res.status(400).json({ message: "Duplicate entry" });
+    } else {
+      console.error(err);
+      return next(err);
+    }
+  }
+};
+// module.exports.addSor = (req,res,next) =>{
+//     var sor = new SOR()
+//      sor.sampleName = req.body.sampleName
+//      sor.state = req.body.state
+//      sor.data = req.body.data
+//    sor.save((err,doc)=>{
+//         if(!err)
+//         return res.status(200).json({
+//             "sor": sor
         
-        })
-        else{
-            if(err.code==11000){
-                console.log("Duplicate Email Found");
-            }
-            else{
-                return next(err);
-            }
-        }
-    })
-}
+//         })
+//         else{
+//             if(err.code==11000){
+//                 console.log("Duplicate Email Found");
+//             }
+//             else{
+//                 return next(err);
+//             }
+//         }
+//     })
+// }
 
 module.exports.getSor = (req,res,next)=>{
     SOR .find(function (err, expenses) {
@@ -37,22 +71,24 @@ module.exports.getSor = (req,res,next)=>{
       }
       });
    }
-  
-   module.exports.getSORById = (req,res,next)=>{
-    let id = req.params.id;
-    SOR .findOne({_id:id},
-      (err,user)=>{
-          if(!user)
-          return res.status(404).json({
-              status:false,message:"User not found"
-          })
-        else
-          return res.status(200).json({
-              status:true,user: user
-          })
-      }
-      )
-  
+
+   module.exports.getSORById = async (req,res,next)=>{
+   try {
+    const sorId = req.params.id;
+
+    const sor = await SOR.findById(sorId);
+    if (!sor) return res.status(404).json({ message: "SOR not found" });
+
+    const data = await SORData.find({ sorId: sor._id });
+
+    return res.status(200).json({
+      sor,
+      data,
+    });
+  } catch (err) {
+    console.error(err);
+    return next(err);
+  }
    }
   
 
@@ -82,12 +118,30 @@ module.exports.getSor = (req,res,next)=>{
 };
 
  
-      module.exports.deleteSOR = (req,res,next)=>{
-         let id = req.params.id;
-          SOR.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
-          if (err) res.json(err);
-          else res.json('SOR Deleted Successfully');
-          });
+      module.exports.deleteSOR = async (req,res,next)=>{
+         try {
+    const sorId = req.params.id;
+
+    // 1. Delete the main SOR document
+    const deletedSOR = await SOR.findByIdAndDelete(sorId);
+
+    if (!deletedSOR) {
+      return res.status(404).json({ message: "SOR not found" });
+    }
+
+    // 2. Delete all data associated with this SOR
+    const deleteResult = await SORData.deleteMany({ sorId });
+
+    return res.status(200).json({
+      message: "SOR and its associated data deleted successfully",
+      deletedSOR,
+      deletedDataCount: deleteResult.deletedCount,
+    });
+
+  } catch (err) {
+    console.error("Delete error:", err);
+    return next(err);
+  }
         }
 
 
