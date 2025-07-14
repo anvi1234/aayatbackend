@@ -39,27 +39,7 @@ module.exports.addSor = async (req, res, next) => {
     }
   }
 };
-// module.exports.addSor = (req,res,next) =>{
-//     var sor = new SOR()
-//      sor.sampleName = req.body.sampleName
-//      sor.state = req.body.state
-//      sor.data = req.body.data
-//    sor.save((err,doc)=>{
-//         if(!err)
-//         return res.status(200).json({
-//             "sor": sor
-        
-//         })
-//         else{
-//             if(err.code==11000){
-//                 console.log("Duplicate Email Found");
-//             }
-//             else{
-//                 return next(err);
-//             }
-//         }
-//     })
-// }
+
 
 module.exports.getSor = (req,res,next)=>{
     SOR .find(function (err, expenses) {
@@ -92,29 +72,34 @@ module.exports.getSor = (req,res,next)=>{
    }
   
 
-   module.exports.updateSor = (req, res, next) => {
-  const sorId = req.body.sorId;              // Main SOR document ID
-  const dataItemId = req.body.dataItemId;    // ID of item inside data array
-  const updatedFields = req.body.updatedFields; // Object with updated fields
-  SOR.updateOne(
-    { _id: sorId, "data._id": dataItemId },
-    {
-      $set: {
-        "data.$.FinalRate": updatedFields.FinalRate,
-        "data.$.Description": updatedFields.Description,
-        "data.$Sn":updatedFields.Sn,
-        "data.$ServiceNo":updatedFields.ServiceNo,
-        "data.$UOM":updatedFields.UOM,
-      }
-    },
-    (err, result) => {
-      if (!err) {
-        res.status(200).json({ message: 'Data item updated successfully', result });
-      } else {
-        next(err);
-      }
+   module.exports.updateSor = async (req, res, next) => {
+   try {
+    const { sorId, dataItemId, updatedFields } = req.body;
+
+    if (!sorId || !dataItemId || !updatedFields) {
+      return res.status(400).json({ message: "sorId, dataItemId, and updatedFields are required." });
     }
-  );
+
+    // Only update if the item belongs to the correct sorId
+    const updatedDataItem = await SORData.findOneAndUpdate(
+      { _id: dataItemId, sorId: sorId },
+      { $set: updatedFields },
+      { new: true }
+    );
+
+    if (!updatedDataItem) {
+      return res.status(404).json({ message: "Data item not found or doesn't belong to the given SOR." });
+    }
+
+    return res.status(200).json({
+      message: "Data item updated successfully.",
+      data: updatedDataItem
+    });
+
+  } catch (err) {
+    console.error("Update error:", err);
+    return next(err);
+  }
 };
 
  
