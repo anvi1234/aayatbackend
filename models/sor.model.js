@@ -12,10 +12,10 @@ module.exports = mongoose.model('Sor',sorSchema);
 const sorDataSchema = new mongoose.Schema({
   sorId: { type: mongoose.Schema.Types.ObjectId, ref: "Sor" },
   Sn: String,
-  ServiceNo: String,
+  ServiceNo: Number,
   Description: String,
   UoM:String,
-  FinalRate: String
+  FinalRate: Number
   // other fields in your data array
 });
 
