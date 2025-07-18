@@ -17,10 +17,7 @@ module.exports.getDrawing = (req,res,next)=>{
       }
       });
    }
-
- 
-
-    
+  
  module.exports.getFileById = (req,res,next)=>{
     let id = req.params.id;
     drawing.findOne({_id:id},

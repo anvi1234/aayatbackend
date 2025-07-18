@@ -70,6 +70,34 @@ module.exports.getSor = (req,res,next)=>{
     return next(err);
   }
    }
+
+   module.exports.getSORByStateName = async (req, res, next) => {
+  try {
+    const { stateName } = req.params;
+
+    // Find SORs matching the state name
+    const sorList = await SOR.find({ stateName: new RegExp(stateName, 'i') });
+
+    if (!sorList || sorList.length === 0) {
+      return res.status(404).json({ message: "No SOR found for the given state name" });
+    }
+
+    // For each SOR, fetch associated SORData
+    const results = await Promise.all(sorList.map(async (sor) => {
+      const data = await SORData.find({ sorId: sor._id });
+      return {
+        sor,
+        data
+      };
+    }));
+
+    return res.status(200).json(results);
+  } catch (err) {
+    console.error(err);
+    return next(err);
+  }
+};
+
   
 
    module.exports.updateSor = async (req, res, next) => {

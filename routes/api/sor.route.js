@@ -20,6 +20,8 @@ router.delete('/delete-sor-bill/:id',sorsData.deleteSorBill);
 router.delete('/delete-sor-mb/:id',sorsData.deleteSorRegSite);
 router.get('/getSORREgardingById/:id',sorsData.getSORREgardingById);
 router.get('/getSORRBillById/:id',sorsData.getSORBillById)
+router.get('/state/:stateName', sorsData.getSORByStateName);
+
 // router.get('/getexpensesByQuery', expensesData.getExpensesByComNameandloc);
 
 module.exports = router;
