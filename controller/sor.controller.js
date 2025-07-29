@@ -211,10 +211,10 @@ module.exports.getSampleSorMBForDropDown = (req, res, next) => {
 };
     
 
-     module.exports.getSampleMBByState = (req, res, next) => {
-  const state = req.params.state;
+   module.exports.getSampleMBByStateAndSample = (req, res, next) => {
+  const { state, sample } = req.params;
 
-  SAMPLESORMB.findOne({ state: state }, (err, SOR) => {
+  SAMPLESORMB.findOne({ state: state, sampleName: sample }, (err, SOR) => {
     if (err) {
       return res.status(500).json({ status: false, message: 'Server error', error: err });
     }
@@ -226,6 +226,8 @@ module.exports.getSampleSorMBForDropDown = (req, res, next) => {
     }
   });
 };
+
+
           module.exports.deleteSORMB = (req,res,next)=>{
     
         let id = req.params.id;
