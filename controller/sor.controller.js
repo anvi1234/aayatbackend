@@ -76,7 +76,7 @@ module.exports.getSor = (req,res,next)=>{
     const { stateName } = req.params;
 
     // Find SORs matching the state name
-    const sorList = await SOR.find({ stateName: new RegExp(stateName, 'i') });
+    const sorList = await SOR.find({ state: new RegExp(stateName, 'i') });
 
     if (!sorList || sorList.length === 0) {
       return res.status(404).json({ message: "No SOR found for the given state name" });
