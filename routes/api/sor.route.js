@@ -21,7 +21,7 @@ router.delete('/delete-sor-mb/:id',sorsData.deleteSorRegSite);
 router.get('/getSORREgardingById/:id',sorsData.getSORREgardingById);
 router.get('/getSORRBillById/:id',sorsData.getSORBillById)
 router.get('/state/:stateName', sorsData.getSORByStateName);
-router.get('/mb/getSampleMBByState',sorsData.getSampleMBByState);
+router.get('/mb/getSampleMBByState/:stateName',sorsData.getSampleMBByState);
 router.get('/mb/deleteSampleMB',sorsData.deleteSORMB);
 
 // router.get('/getexpensesByQuery', expensesData.getExpensesByComNameandloc);
