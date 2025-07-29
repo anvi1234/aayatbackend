@@ -22,7 +22,7 @@ router.get('/getSORREgardingById/:id',sorsData.getSORREgardingById);
 router.get('/getSORRBillById/:id',sorsData.getSORBillById)
 router.get('/state/:stateName', sorsData.getSORByStateName);
 router.get('/mb/getSampleMBByStateAndSample/:state/:sample',sorsData.getSampleMBByStateAndSample);
-router.get('/mb/deleteSampleMB/:id',sorsData.deleteSORMB);
+router.delete('/mb/deleteSampleMB/:id',sorsData.deleteSORMB);
 router.get('/getSampleSorMBForDropDown',sorsData.getSampleSorMBForDropDown)
 
 // router.get('/getexpensesByQuery', expensesData.getExpensesByComNameandloc);
