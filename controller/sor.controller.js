@@ -231,7 +231,7 @@ module.exports.getSampleSorMBForDropDown = (req, res, next) => {
           module.exports.deleteSORMB = (req,res,next)=>{
     
         let id = req.params.id;
-        P.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
+        SAMPLESORMB.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
           if (err) res.json(err);
           else res.json('SOR MB Deleted Successfully');
           });
