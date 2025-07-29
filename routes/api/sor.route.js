@@ -9,8 +9,8 @@ router.get('/getSor',sorsData.getSor);
 router.get('/getSorById/:id',sorsData.getSORById);
 router.put('/updateSor',sorsData.updateSor);
 router.delete('/deleteSor/:id',sorsData.deleteSOR);
-router.post('/add-sample-sor',sorsData.addSampleSor);
-router.get('/getSampleSor',sorsData.getSampleSor);
+router.post('/add-sample-sor-mb',sorsData.addSampleSorMB);
+router.get('/getSampleSorMB',sorsData.getSampleSorMB);
 router.post('/add-sor-reg-site',sorsData.addSorRegardingSite);
 router.post('/add-bill-sor',sorsData.addBillSor);
 router.get('/sor-bill',sorsData.getSorBill);
@@ -21,6 +21,8 @@ router.delete('/delete-sor-mb/:id',sorsData.deleteSorRegSite);
 router.get('/getSORREgardingById/:id',sorsData.getSORREgardingById);
 router.get('/getSORRBillById/:id',sorsData.getSORBillById)
 router.get('/state/:stateName', sorsData.getSORByStateName);
+router.get('mb/getSampleMBByState',sorsData.getSampleMBByState);
+router.get('/mb/deleteSampleMB',sorsData.deleteSORMB);
 
 // router.get('/getexpensesByQuery', expensesData.getExpensesByComNameandloc);
 

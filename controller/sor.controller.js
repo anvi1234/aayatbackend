@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const _= require('lodash')
 const SOR = mongoose.model('Sor')
-const SAMPLESOR = mongoose.model('SampleSor')
+const SAMPLESORMB = mongoose.model('SAMPLESORMB')
 const SORREgSITE = mongoose.model('SORRegardingSite')
 const SORBill = mongoose.model('SORBillSite')
 const SORData = mongoose.model('SORData')
@@ -42,7 +42,7 @@ module.exports.addSor = async (req, res, next) => {
 
 
 module.exports.getSor = (req,res,next)=>{
-    SOR .find(function (err, expenses) {
+    SOR.find(function (err, expenses) {
       if (err) {
       console.log(err);
       }
@@ -159,8 +159,8 @@ module.exports.getSor = (req,res,next)=>{
 
 
         //Sample SOR //
-        module.exports.addSampleSor = (req,res,next) =>{
-          var sor = new SAMPLESOR()
+        module.exports.addSampleSorMB = (req,res,next) =>{
+          var sor = new SAMPLESORMB()
            sor.sampleName = req.body.sampleName
            sor.data = req.body.data
            sor.state = req.body.state
@@ -182,8 +182,9 @@ module.exports.getSor = (req,res,next)=>{
 
          
       }
-      module.exports.getSampleSor = (req,res,next)=>{
-        SAMPLESOR.find(function (err, sor) {
+
+      module.exports.getSampleSorMB = (req,res,next)=>{
+        SAMPLESORMB.find(function (err, sor) {
           if (err) {
           console.log(err);
           }
@@ -193,6 +194,35 @@ module.exports.getSor = (req,res,next)=>{
           });
        }
 
+       module.exports.getSampleMBByState = (req,res,next)=>{
+            let state = req.params
+            SAMPLESORMB.findOne({state:state},
+      (err,SOR)=>{
+        if(SOR){
+             return res.status(200).json({
+              status:true,data: SOR
+          })
+        }
+
+        else{
+            return [];
+        }
+    })
+      
+        
+       }
+
+          module.exports.deleteSORMB = (req,res,next)=>{
+    
+        let id = req.params.id;
+        P.findByIdAndRemove({ _id: req.params.id }, function (err,expense) {
+          if (err) res.json(err);
+          else res.json('SOR MB Deleted Successfully');
+          });
+        }
+       
+    
+       
 
        //SOR RegardingSite//
        module.exports.addSorRegardingSite = (req,res,next) =>{
@@ -228,6 +258,9 @@ module.exports.getSor = (req,res,next)=>{
 
        
     }
+
+
+
     module.exports.getSorRegSite = (req,res,next)=>{
         SORREgSITE.find(function (err, sor) {
         if (err) {

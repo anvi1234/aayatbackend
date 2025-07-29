@@ -22,13 +22,13 @@ const sorDataSchema = new mongoose.Schema({
 module.exports = mongoose.model("SORData", sorDataSchema);
 
 
-var addSorSchema  = new mongoose.Schema({
+var addSorMBSchema  = new mongoose.Schema({
     sampleName: String,
     data:[],
     state:String
    
 })
-module.exports = mongoose.model('SampleSor',addSorSchema);
+module.exports = mongoose.model('SAMPLESORMB',addSorMBSchema);
 
 
 var addSorRegardingWorkingSite  = new mongoose.Schema({
