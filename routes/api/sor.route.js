@@ -23,6 +23,7 @@ router.get('/getSORRBillById/:id',sorsData.getSORBillById)
 router.get('/state/:stateName', sorsData.getSORByStateName);
 router.get('/mb/getSampleMBByState/:state',sorsData.getSampleMBByState);
 router.get('/mb/deleteSampleMB',sorsData.deleteSORMB);
+router.get('/getSampleSorMBForDropDown',sorsData.getSampleSorMBForDropDown)
 
 // router.get('/getexpensesByQuery', expensesData.getExpensesByComNameandloc);
 

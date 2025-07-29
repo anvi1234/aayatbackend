@@ -194,6 +194,21 @@ module.exports.getSor = (req,res,next)=>{
           });
        }
 
+       module.exports.getSampleSorMBForDropDown = (req,res,next)=>{
+        SAMPLESORMB.find(function (err, sor) {
+          if (err) {
+          console.log(err);
+          }
+          else {
+            let samplesor = sor.filter((e)=>{
+              return {sampleName:e.sampleName , state:e.state}
+            })
+          res.json( samplesor);
+          }
+          });
+       }
+
+
      module.exports.getSampleMBByState = (req, res, next) => {
   const state = req.params.state;
 
