@@ -194,24 +194,21 @@ module.exports.getSor = (req,res,next)=>{
           });
        }
 
-       module.exports.getSampleMBByState = (req,res,next)=>{
-            let state = req.params
-            SAMPLESORMB.findOne({state:state},
-      (err,SOR)=>{
-        if(SOR){
-             return res.status(200).json({
-              status:true,data: SOR
-          })
-        }
+     module.exports.getSampleMBByState = (req, res, next) => {
+  const state = req.params.state;
 
-        else{
-            return [];
-        }
-    })
-      
-        
-       }
+  SAMPLESORMB.findOne({ state: state }, (err, SOR) => {
+    if (err) {
+      return res.status(500).json({ status: false, message: 'Server error', error: err });
+    }
 
+    if (SOR) {
+      return res.status(200).json({ status: true, data: SOR });
+    } else {
+      return res.status(404).json({ status: false, message: 'No record found' });
+    }
+  });
+};
           module.exports.deleteSORMB = (req,res,next)=>{
     
         let id = req.params.id;
