@@ -198,7 +198,7 @@ module.exports.getSor = (req,res,next)=>{
 
 module.exports.getSampleSorMBForDropDown = (req, res, next) => {
   SAMPLESORMB.find({})
-    .select('sampleName state') // ✅ only return these fields
+    .select('sampleName state type') // ✅ only return these fields
     .exec((err, results) => {
       if (err) {
         return res.status(500).json({ status: false, message: 'Server error', error: err });
