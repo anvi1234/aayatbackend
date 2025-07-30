@@ -276,6 +276,32 @@ module.exports.getSampleSorMBForDropDown = (req, res, next) => {
        
     }
 
+    module.exports.getSorRegSiteByNameAndType = (req, res, next) => {
+  SAMPLESORMB.find({})
+    .select('siteName locationName nameOfConstruction sampleName') // ✅ only return these fields
+    .exec((err, results) => {
+      if (err) {
+        return res.status(500).json({ status: false, message: 'Server error', error: err });
+      }
+
+      return res.status(200).json({
+        status: true,
+        data: results
+      });
+    });
+};
+   
+  
+       module.exports.getSorRegSiteByNameAndType = (req,res,next)=>{
+        SORREgSITE.find(function (err, sor) {
+        if (err) {
+        console.log(err);
+        }
+        else {
+        res.json( sor);
+        }
+        });
+     }
 
 
     module.exports.getSorRegSite = (req,res,next)=>{
