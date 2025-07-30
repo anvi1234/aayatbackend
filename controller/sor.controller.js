@@ -356,10 +356,14 @@ module.exports.getSampleSorMBForDropDown = (req, res, next) => {
             sor.combineAmount = req.body.combineAmount,
             sor.cgst =  req.body.cgst 
             sor.sgst =  req.body.sgst
-           sor.save().then(emp => {
+           sor.save().then(updatedSOR => {
     
               
-          res.json('Site Updated Successfully');
+          res.json({
+             status: true,
+          message: 'SOR updated successfully',
+          data: updatedSOR
+          });
           })
           .catch(err => {
           res.status(400).send("Unable To Update Site");
