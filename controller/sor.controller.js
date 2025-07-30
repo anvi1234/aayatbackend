@@ -277,7 +277,7 @@ module.exports.getSampleSorMBForDropDown = (req, res, next) => {
     }
 
     module.exports.getSorRegSiteByNameAndType = (req, res, next) => {
-  SAMPLESORMB.find({})
+  SORREgSITE.find({})
     .select('siteName locationName nameOfConstruction sampleName') // ✅ only return these fields
     .exec((err, results) => {
       if (err) {
