@@ -25,7 +25,8 @@ module.exports = mongoose.model("SORData", sorDataSchema);
 var addSorMBSchema  = new mongoose.Schema({
     sampleName: String,
     data:[],
-    state:String
+    state:String,
+    type:String
    
 })
 module.exports = mongoose.model('SAMPLESORMB',addSorMBSchema);

@@ -164,6 +164,7 @@ module.exports.getSor = (req,res,next)=>{
            sor.sampleName = req.body.sampleName
            sor.data = req.body.data
            sor.state = req.body.state
+           sor.type = req.body.type
            sor.save((err,doc)=>{
               if(!err)
               return res.status(200).json({
