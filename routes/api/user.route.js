@@ -11,4 +11,5 @@ router.get('/getUserById/:id',ctrlUser.getUserById);
 router.put('/updateUser/:id',ctrlUser.updateUser);
 router.delete('/deleteUser/:id',ctrlUser.deleteUser);
 router.get('/userByUniqueID/:id',ctrlUser.getUserByUniqueId);
+router.get('/totalUser',ctrlUser.getEmployeeCount);
 module.exports = router;

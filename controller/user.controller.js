@@ -179,4 +179,21 @@ module.exports.cngSite = (req,res,next)=>{
       })
       })
       }
+
+      module.exports.getEmployeeCount = async (req, res, next) => {
+  try {
+    const count = await User.countDocuments(); // counts all documents
+    res.status(200).json({
+      success: true,
+      totalEmployees: count
+    });
+  } catch (err) {
+    console.error("Error counting employees:", err);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching employee count",
+      error: err.message
+    });
+  }
+};
  
