@@ -181,3 +181,30 @@ module.exports.getExpenses = (req,res,next)=>{
     })
         })
           }
+module.exports.getTotalExpenseAmount = async (req, res, next) => {
+  try {
+    const result = await Expense.aggregate([
+      {
+        $group: {
+          _id: null, // we don’t need grouping by field
+          totalExpenseAmount: { $sum: "$expenseAmount" } // sum all expenseAmount values
+        }
+      }
+    ]);
+
+    // if no data exists, return 0
+    const total = result.length > 0 ? result[0].totalExpenseAmount : 0;
+
+    res.status(200).json({
+      status: true,
+      totalExpenseAmount: total
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: false,
+      message: "Error while calculating total expense amount",
+      error: err.message
+    });
+  }
+};

@@ -294,3 +294,29 @@ module.exports.getTransactionAndExpenseTotals = async (req, res) => {
   }
 };
 
+module.exports.getTotalTransactionAmount = async (req, res, next) => {
+  try {
+    const result = await Transaction.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalTransactionAmount: { $sum: "$totalAmount" } // sum of all totalAmount
+        }
+      }
+    ]);
+
+    const total = result.length > 0 ? result[0].totalTransactionAmount : 0;
+
+    res.status(200).json({
+      status: true,
+      totalTransactionAmount: total
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: false,
+      message: "Error while calculating total transaction amount",
+      error: err.message
+    });
+  }
+};

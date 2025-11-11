@@ -24,4 +24,8 @@ router.get(
   '/summary',
   transactionData.getTransactionAndExpenseTotals
 );
+router.get(
+  '/totalTransacAmount',
+  transactionData.getTotalTransactionAmount
+);
 module.exports = router;
