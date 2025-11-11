@@ -8,4 +8,5 @@ router.get('/getSite',siteData.getSiteReg);
 router.get('/getSiteById/:id',siteData.getSiteById);
 router.put('/updateSite/:id',siteData.updateSite);
 router.delete('/deleteSite/:id',siteData.deleteSite);
+router.get('/siteSummery',siteData.getSiteSummary);
 module.exports = router;
