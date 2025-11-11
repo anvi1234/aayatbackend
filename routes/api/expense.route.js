@@ -13,5 +13,6 @@ router.get('/getexpensesByQuery/:id', expensesData.getExpensesByComNameandloc);
 router.get('/getexpensesBUId/:id', expensesData.getExpensesByUniqueId);
 router.post('/gettotalexpensesByQuery', expensesData.getTotalExpensesByComNameandloc);
 router.put('/updateMultipleExpenses', expensesData.updateMultipleExpenses);
+router.get('/gettotalExpense', expensesData.getTotalExpenseAmount);
 
 module.exports = router;
