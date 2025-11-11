@@ -133,6 +133,7 @@ module.exports.getSiteSummary = async (req, res, next) => {
           siteName,
           location,
           date: site.date || null,
+          status: site.status,
           totalExpenseAmount,
           totalTransactionAmount
         };
